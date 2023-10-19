@@ -7,14 +7,14 @@ git add .
 # Build binary tagged with version + commit hash
 go build -ldflags "-X main.versionTag=$VERSION_TAG -X main.commit=$COMMIT_HASH -X main.buildType=$BUILD_TYPE" -o ./Username-Generator
 
-# # Commit changes
-# git commit -m "Release $(./Username-Generator --version | cut -d' ' -f3)"
+# Commit changes
+git commit -m "Release $(./Username-Generator --version | cut -d' ' -f3)"
 
-# # Push changes
-# git push
+# Push changes
+git push
 
-# # Create a new tag
-# git tag $(./Username-Generator --version | cut -d' ' -f3)
+# Create a new tag
+git tag $(./Username-Generator --version | cut -d' ' -f3)
 
-# # Push tag
-# git push --tags
+# Push tag
+git push --tags
