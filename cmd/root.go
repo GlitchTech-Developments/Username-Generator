@@ -5,6 +5,8 @@ package cmd
 
 import (
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/spf13/cobra"
 )
@@ -13,7 +15,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "Username-Generator",
 	Short: "A fast CLI to generate usernames",
-	Long: `A fast CLI to generate usernames`,
+	Long:  `A fast CLI to generate usernames`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
@@ -23,12 +25,19 @@ var rootCmd = &cobra.Command{
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	err := rootCmd.Execute()
+
 	if err != nil {
 		os.Exit(1)
 	}
 }
 
 func init() {
+	version := "v0.1"
+	buildTS := time.Now().Unix()
+	versionString := version + "-rc" + strconv.FormatInt(buildTS, 10)
+
+	rootCmd.Version = versionString
+
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
@@ -39,5 +48,3 @@ func init() {
 	// when this action is called directly.
 	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-
