@@ -1,0 +1,83 @@
+name: Build and Release Go Application
+
+on:
+    push:
+        branches:
+            - main # Change this to your default branch
+
+jobs:
+    build:
+        name: Build and Release
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+            - name: Set up Go
+              uses: actions/setup-go@v2
+              with:
+                  go-version: 1.21 # Change this to your desired Go version
+
+            - name: Build for Linux
+              run: GOOS=linux GOARCH=amd64 go build -o Username-Generator-linux
+
+            - name: Build for Windows
+              run: GOOS=windows GOARCH=amd64 go build -o Username-Generator-windows.exe
+
+            - name: Build for macOS
+              run: GOOS=darwin GOARCH=amd64 go build -o Username-Generator-macos
+
+            - name: Archive Artifacts
+              run: |
+                  zip Username-Generator-linux.zip Username-Generator-linux
+                  zip Username-Generator-windows.zip Username-Generator-windows.exe
+                  zip Username-Generator-macos.zip Username-Generator-macos
+
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v2
+              with:
+                  name: Username-Generator
+                  path: |
+                      Username-Generator-linux.zip
+                      Username-Generator-windows.zip
+                      Username-Generator-macos.zip
+
+    release:
+        name: Create GitHub Release
+        needs: build
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+            - name: Download Artifacts
+              uses: actions/download-artifact@v2
+              with:
+                  name: Username-Generator
+
+            - name: Create Release
+              id: create_release
+              uses: softprops/action-gh-release@v1
+              with:
+                  files: |
+                      Username-Generator-linux.zip
+                      Username-Generator-windows.zip
+                      Username-Generator-macos.zip
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Upload Release Notes
+              run: echo ::set-output name=body::"Release Notes for v${{ steps.create_release.outputs.tag }}"
+              id: release_notes
+
+            - name: Publish Release
+              uses: softprops/action-gh-release@v1
+              with:
+                  files: ${{ steps.create_release.outputs.files }}
+                  tag_name: ${{ steps.create_release.outputs.tag }}
+                  release_name: Release ${{ steps.create_release.outputs.tag }}
+                  body: ${{ steps.release_notes.outputs.body }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
