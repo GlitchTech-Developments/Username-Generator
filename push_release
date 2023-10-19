@@ -5,7 +5,7 @@ source ./.env
 git add .
 
 # Build binary tagged with version + commit hash
-go build -ldflags "-X main.versionTag=$VERSION_TAG -X main.commit=$COMMIT_HASH -X main.buildType=$BUILD_TYPE" -o ./Username-Generator
+go build -o ./Username-Generator
 
 # Commit changes
 git commit -m "Release $(./Username-Generator --version | cut -d' ' -f3)"
@@ -18,5 +18,3 @@ git tag $(./Username-Generator --version | cut -d' ' -f3)
 
 # Push tag
 git push --tags
-
-rm ./Username-Generator
