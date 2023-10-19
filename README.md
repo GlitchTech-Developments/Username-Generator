@@ -11,13 +11,15 @@
 ## Install
 
 ```sh
-tbd
+go install github.com/GlitchTech-Developments/Username-Generator
 ```
 
 ## Usage
 
+Check the flags by using the help command
+
 ```sh
-tbd
+Username-Generator --help
 ```
 
 ## Author
