@@ -69,6 +69,10 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+            - name: Set release details
+              id: vars
+              run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
             - name: Upload Release Notes
               run: echo ::set-output name=body::"Release Notes for v${{ steps.create_release.outputs.tag }}"
               id: release_notes
@@ -77,8 +81,9 @@ jobs:
               uses: softprops/action-gh-release@v1
               with:
                   files: ${{ steps.create_release.outputs.files }}
-                  tag_name: ${{ steps.create_release.outputs.tag }}
-                  name: Release ${{ steps.create_release.outputs.tag }}
+                  tag_name: ${{ env.RELEASE_VERSION }}
+                  name: Release ${{ env.RELEASE_VERSION }}
                   body: ${{ steps.release_notes.outputs.body }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+                  RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
