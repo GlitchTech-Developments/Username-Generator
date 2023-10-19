@@ -77,7 +77,7 @@ jobs:
               with:
                   files: ${{ steps.create_release.outputs.files }}
                   tag_name: ${{ steps.create_release.outputs.tag }}
-                  release_name: Release ${{ steps.create_release.outputs.tag }}
+                  name: Release ${{ steps.create_release.outputs.tag }}
                   body: ${{ steps.release_notes.outputs.body }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
