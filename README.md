@@ -17,7 +17,7 @@
 ## Install
 
 ```sh
-go install github.com/GlitchTech-Developments/Username-Generator
+go install github.com/GlitchTech-Developments/Username-Generator@latest
 ```
 
 ## Usage
