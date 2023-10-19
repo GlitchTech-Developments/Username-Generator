@@ -2,8 +2,6 @@ name: Build and Release Go Application
 
 on:
     push:
-        branches:
-            - main
         tags:
             - "v*.*.*"
             - "v*.*"
