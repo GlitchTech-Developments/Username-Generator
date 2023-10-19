@@ -5,10 +5,10 @@ package main
 
 import (
 	"github.com/GlitchTech-Developments/Username-Generator/cmd"
-	"github.com/spf13/cobra"
 )
 
+var versionCode = "v0.1"
+
 func main() {
-	cobra.EnableCaseInsensitive = true
 	cmd.Execute()
 }

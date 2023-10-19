@@ -22,11 +22,19 @@ var generateCmd = &cobra.Command{
 }
 
 func generateUsername(cmd *cobra.Command, args []string) {
+	// Get the flags
 	minLength, _ := cmd.Flags().GetInt("min")
 	maxLength, _ := cmd.Flags().GetInt("max")
 	wordCount, _ := cmd.Flags().GetInt("words")
 	separator, _ := cmd.Flags().GetString("separator")
 	includeNumbers, _ := cmd.Flags().GetBool("numbers")
+
+	// Check for args
+	if len(args) > 0 {
+		fmt.Println("Sorry there are only flags available for this command.")
+		fmt.Println("Please run `username-generator generate --help` for more information.")
+		return
+	}
 
 	// Initial string to append to
 	initialString := ""
@@ -36,16 +44,13 @@ func generateUsername(cmd *cobra.Command, args []string) {
 		// Capitalize the first letter
 		fakeWord = cases.Title(language.AmericanEnglish).String(fakeWord)
 		
-		// If it's not the first or last word
+		// Append the separator if it's not the first word
 		if i != 0 {
-			
-			// Append the separator
 			initialString += separator
-			// Append the fake word
-			initialString += fakeWord
-		} else {
-			initialString += fakeWord
 		}
+		
+		// Append the fake word
+		initialString += fakeWord
 	}
 
 	// If the user wants numbers

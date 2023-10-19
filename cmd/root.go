@@ -5,8 +5,7 @@ package cmd
 
 import (
 	"os"
-	"strconv"
-	"time"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 )
@@ -15,10 +14,31 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "Username-Generator",
 	Short: "A fast CLI to generate usernames",
-	Long:  `A fast CLI to generate usernames`,
+	// Long:  `A fast CLI to generate usernames`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
+}
+
+func getVersion() string {
+	version := "v0.1.0"
+	buildType := "rc"
+
+	// get the git commit hash
+	gitCommit, err := exec.Command("git", "rev-parse", "--short", "HEAD").Output()
+
+	var versionString = ""
+	if buildType == "rc" {
+		if err == nil {
+			versionString += version + "-" + buildType + "-" + string(gitCommit)
+		} else {
+			versionString += "unable to get version definition"
+		}
+	} else {
+		versionString += version
+	}
+
+	return versionString
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -32,11 +52,7 @@ func Execute() {
 }
 
 func init() {
-	version := "v0.1"
-	buildTS := time.Now().Unix()
-	versionString := version + "-rc" + strconv.FormatInt(buildTS, 10)
-
-	rootCmd.Version = versionString
+	rootCmd.Version = getVersion()
 
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,

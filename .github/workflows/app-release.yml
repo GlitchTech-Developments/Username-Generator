@@ -74,7 +74,7 @@ jobs:
               run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
 
             - name: Upload Release Notes
-              run: echo ::set-output name=body::"Release Notes for v${{ steps.create_release.outputs.tag }}"
+              run: echo ::set-output name=body::"Release Notes for ${{ env.RELEASE_VERSION }}"
               id: release_notes
 
             - name: Publish Release
