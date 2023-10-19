@@ -18,3 +18,5 @@ git tag $(./Username-Generator --version | cut -d' ' -f3)
 
 # Push tag
 git push --tags
+
+rm ./Username-Generator
