@@ -2,8 +2,6 @@ name: Build and Release Go Application
 
 on:
     push:
-        branches:
-            - main # Change this to your default branch
         tags:
             - "v*.*.*"
 
