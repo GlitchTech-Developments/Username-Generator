@@ -7,8 +7,26 @@ import (
 	"github.com/GlitchTech-Developments/Username-Generator/cmd"
 )
 
-var versionCode = "v0.1"
+// receive build flags
+var versionTag string
+var commit string
+var buildType string
+
+// receive build flags
+var _versionTag = versionTag
+var _commit = commit
+var _buildType = buildType
+
+func getVersion(versionTag string, commitHash string, buildType string) string {
+	var versionString = ""
+
+	versionString += versionTag + "-" + buildType + "-" + commitHash
+
+	return versionString
+}
 
 func main() {
-	cmd.Execute()
+	version := getVersion(_versionTag, _commit, _buildType)
+
+	cmd.Execute(version)
 }

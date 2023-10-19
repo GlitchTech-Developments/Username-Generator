@@ -23,3 +23,5 @@ go.work
 
 # tmp folder used for air flow
 tmp
+
+.env
