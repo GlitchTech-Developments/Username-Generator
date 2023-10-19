@@ -8,7 +8,7 @@ on:
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: arch-latest
         steps:
             - uses: actions/checkout@v3
 
@@ -18,7 +18,7 @@ jobs:
                   go-version: "1.21"
 
             - name: Build
-              run: go build main.go
+              run: go build
 
             - name: Upload to github
               uses: actions/upload-artifact@v2
