@@ -1,0 +1,14 @@
+# Description: Push a new release to github
+git add .
+
+# Commit changes
+git commit -m "Release $(go run main.go --version | cut -d' ' -f3)"
+
+# Push changes
+git push
+
+# Create a new tag
+git tag $(go run main.go --version | cut -d' ' -f3) 
+
+# Push tag
+git push --tags
