@@ -15,19 +15,29 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v2
 
+            - name: Set release details
+              id: vars
+              run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
             - name: Set up Go
               uses: actions/setup-go@v2
               with:
                   go-version: 1.21 # Change this to your desired Go version
 
             - name: Build for Linux
-              run: GOOS=linux GOARCH=amd64 go build -o Username-Generator-linux
+              run: GOOS=linux GOARCH=amd64 -ldflags "-X main.versionOverride=${{ env.RELEASE_VERSION }}" go build -o Username-Generator-linux
+              env:
+                  RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
 
             - name: Build for Windows
-              run: GOOS=windows GOARCH=amd64 go build -o Username-Generator-windows.exe
+              run: GOOS=windows GOARCH=amd64 -ldflags "-X main.versionOverride=${{ env.RELEASE_VERSION }}" go build -o Username-Generator-windows.exe
+              env:
+                  RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
 
             - name: Build for macOS
-              run: GOOS=darwin GOARCH=amd64 go build -o Username-Generator-macos
+              run: GOOS=darwin GOARCH=amd64 -ldflags "-X main.versionOverride=${{ env.RELEASE_VERSION }}" go build -o Username-Generator-macos
+              env:
+                  RELEASE_VERSION: ${{ steps.vars.outputs.tag }}
 
             - name: Archive Artifacts
               run: |

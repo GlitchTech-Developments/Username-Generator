@@ -11,11 +11,13 @@ import (
 var versionTag string
 var commit string
 var buildType string
+var versionTagOverride string
 
 // receive build flags
 var _versionTag = versionTag
 var _commit = commit
 var _buildType = buildType
+var _versionTagOverride = versionTagOverride
 
 func getVersion(versionTag string, commitHash string, buildType string) string {
 	var versionString = ""
@@ -26,7 +28,12 @@ func getVersion(versionTag string, commitHash string, buildType string) string {
 }
 
 func main() {
-	version := getVersion(_versionTag, _commit, _buildType)
+	version := ""
+	if _versionTagOverride != "" {
+		version += _versionTagOverride
+	} else {
+		version += getVersion(_versionTag, _commit, _buildType)
+	}
 
 	cmd.Execute(version)
 }
