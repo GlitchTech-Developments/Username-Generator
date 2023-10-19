@@ -5,7 +5,6 @@ package cmd
 
 import (
 	"os"
-	"os/exec"
 
 	"github.com/spf13/cobra"
 )
@@ -20,39 +19,19 @@ var rootCmd = &cobra.Command{
 	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
-func getVersion() string {
-	version := "v0.1.0"
-	buildType := "rc"
-
-	// get the git commit hash
-	gitCommit, err := exec.Command("git", "rev-parse", "--short", "HEAD").Output()
-
-	var versionString = ""
-	if buildType == "rc" {
-		if err == nil {
-			versionString += version + "-" + buildType + "-" + string(gitCommit)
-		} else {
-			versionString += "unable to get version definition"
-		}
-	} else {
-		versionString += version
-	}
-
-	return versionString
-}
-
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
+func Execute(versionString string) {
+	rootCmd.Version = versionString
 	err := rootCmd.Execute()
 
 	if err != nil {
 		os.Exit(1)
 	}
+
 }
 
 func init() {
-	rootCmd.Version = getVersion()
 
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
