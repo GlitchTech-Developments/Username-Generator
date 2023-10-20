@@ -11,19 +11,19 @@ git add .
 go build -o ./Username-Generator
 
 # Commit changes
-git commit -m "Release $VERSION_TAG-$BUILD_TYPE-$COMMIT_HASH"
+git commit -m "Release $VERSION_TAG$BUILD_TYPE$COMMIT_HASH"
 
 # Push changes
 git push
 
 # Create a new tag
-git tag $VERSION_TAG-$BUILD_TYPE-$COMMIT_HASH
+git tag $VERSION_TAG$BUILD_TYPE$COMMIT_HASH
 
 # Push tag
 git push --tags
 
 # Output current version
-echo $VERSION_TAG-$BUILD_TYPE-$COMMIT_HASH > current-version.txt
+echo $VERSION_TAG$BUILD_TYPE$COMMIT_HASH > current-version.txt
 
 # Cleanup binary
 rm ./Username-Generator
