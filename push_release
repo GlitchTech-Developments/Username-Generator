@@ -1,6 +1,9 @@
 # Sourcing local .env file
 source ./.env
 
+# Wipe previous version output
+rm current-version.txt
+
 # Description: Push a new release to github
 git add .
 
@@ -18,3 +21,6 @@ git tag $(./Username-Generator --version | cut -d' ' -f3)
 
 # Push tag
 git push --tags
+
+# Output current version
+./Username-Generator --version | cut -d' ' -f3 > current-version.txt
