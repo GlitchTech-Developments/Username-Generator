@@ -4,6 +4,9 @@ source ./.env
 # Wipe previous version output
 rm current-version.txt
 
+# Output current version
+echo $VERSION_TAG$BUILD_TYPE$COMMIT_HASH > current-version.txt
+
 # Description: Push a new release to github
 git add .
 
@@ -21,9 +24,6 @@ git tag $VERSION_TAG$BUILD_TYPE$COMMIT_HASH
 
 # Push tag
 git push --tags
-
-# Output current version
-echo $VERSION_TAG$BUILD_TYPE$COMMIT_HASH > current-version.txt
 
 # Cleanup binary
 rm ./Username-Generator
