@@ -80,7 +80,7 @@ jobs:
               with:
                   files: ${{ steps.create_release.outputs.files }}
                   tag_name: ${{ steps.create_release.outputs.tag }}
-                  name: Release ${{ steps.create_release.outputs.tag }}
+                  name: Release ${{ env.RELEASE_VERSION }}
                   body: ${{ steps.release_notes.outputs.body }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
