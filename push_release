@@ -7,23 +7,30 @@ rm current-version.txt
 # Output current version
 echo $VERSION_TAG$BUILD_TYPE$COMMIT_HASH > current-version.txt
 
-# Description: Push a new release to github
-git add .
+# Output current version to version config go file for use in application
+echo "package config
 
-# Build binary tagged with version + commit hash
-go build -o ./Username-Generator
+func appVersion () string {
+    return "\"$VERSION_TAG$BUILD_TYPE$COMMIT_HASH"\"
+}" > ./config/appVersion.go
 
-# Commit changes
-git commit -m "Release $VERSION_TAG$BUILD_TYPE$COMMIT_HASH"
+# # Description: Push a new release to github
+# git add .
 
-# Push changes
-git push
+# # Build binary tagged with version + commit hash
+# go build -o ./Username-Generator
 
-# Create a new tag
-git tag $VERSION_TAG$BUILD_TYPE$COMMIT_HASH
+# # Commit changes
+# git commit -m "Release $VERSION_TAG$BUILD_TYPE$COMMIT_HASH"
 
-# Push tag
-git push --tags
+# # Push changes
+# git push
 
-# Cleanup binary
-rm ./Username-Generator
+# # Create a new tag
+# git tag $VERSION_TAG$BUILD_TYPE$COMMIT_HASH
+
+# # Push tag
+# git push --tags
+
+# # Cleanup binary
+# rm ./Username-Generator
