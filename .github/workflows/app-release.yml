@@ -71,8 +71,12 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+            - name: Create Release Notes
+              id: release_notes_gen
+              uses: docker://decathlon/release-notes-generator-action:2.0.1
+
             - name: Upload Release Notes
-              run: echo ::set-output name=body::"Release Notes for v${{ steps.vars.outputs.tag }}"
+              run: echo ::set-output name=body::"Release Notes for ${{ steps.vars.outputs.tag }} \n ${{ steps.release_notes_gen.outputs.release_notes }}"
               id: release_notes
 
             - name: Publish Release
