@@ -67,6 +67,10 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+            - name: Set release details
+              id: vars
+              run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
             - name: Upload Release Notes
               run: echo ::set-output name=body::"Release Notes for v${{ steps.create_release.outputs.tag }}"
               id: release_notes
