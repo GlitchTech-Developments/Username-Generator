@@ -7,6 +7,6 @@ require (
 	github.com/nwtgck/go-fakelish v0.1.3 // indirect
 	github.com/spf13/cobra v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/ugorji/go/codec v1.1.7 // indirect
+	github.com/ugorji/go/codec v1.2.11 // indirect
 	golang.org/x/text v0.13.0 // indirect
 )
