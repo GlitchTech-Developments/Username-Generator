@@ -56,31 +56,31 @@ jobs:
               with:
                   name: Username-Generator
 
+            - name: Set release details
+              id: vars
+              run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
             - name: Create Release
               id: create_release
               uses: softprops/action-gh-release@v1
               with:
                   files: |
-                      Username-Generator-linux.zip
-                      Username-Generator-windows.zip
-                      Username-Generator-macos.zip
+                      Username-Generator-${{ steps.vars.outputs.tag }}-linux.zip
+                      Username-Generator-${{ steps.vars.outputs.tag }}-windows.zip
+                      Username-Generator-${{ steps.vars.outputs.tag }}-macos.zip
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-            - name: Set release details
-              id: vars
-              run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
-
             - name: Upload Release Notes
-              run: echo ::set-output name=body::"Release Notes for v${{ steps.create_release.outputs.tag }}"
+              run: echo ::set-output name=body::"Release Notes for v${{ steps.vars.outputs.tag }}"
               id: release_notes
 
             - name: Publish Release
               uses: softprops/action-gh-release@v1
               with:
                   files: ${{ steps.create_release.outputs.files }}
-                  tag_name: ${{ steps.create_release.outputs.tag }}
-                  name: Release ${{ env.RELEASE_VERSION }}
+                  tag_name: ${{ steps.vars.outputs.tag }}
+                  name: Release ${{ steps.vars.outputs.tag }}
                   body: ${{ steps.release_notes.outputs.body }}
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
