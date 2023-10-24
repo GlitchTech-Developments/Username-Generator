@@ -12,11 +12,8 @@ import (
 //go:embed current-version.txt
 var f embed.FS
 
-// type Config struct {
-// 	version string
-// }
-
 func main() {
 	version, _ := f.ReadFile("current-version.txt")
+
 	cmd.Execute(string(version))
 }

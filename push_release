@@ -7,13 +7,6 @@ rm current-version.txt
 # Output current version
 echo $VERSION_TAG$BUILD_TYPE$COMMIT_HASH > current-version.txt
 
-# Output current version to version config go file for use in application
-echo "package config
-
-func appVersion () string {
-    return "\"$VERSION_TAG$BUILD_TYPE$COMMIT_HASH"\"
-}" > ./config/appVersion.go
-
 # # Description: Push a new release to github
 # git add .
 
