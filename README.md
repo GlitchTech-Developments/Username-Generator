@@ -8,7 +8,7 @@
 
 > A simple username generator written in go.
 
-## CI/CD Status
+## CI/CD Status Badges
 
 <a href="https://github.com/GlitchTech-Developments/Username-Generator/actions/workflows/app-release.yml">
   <img src="https://github.com/GlitchTech-Developments/Username-Generator/actions/workflows/app-release.yml/badge.svg" alt="Build and Release Go Application">

@@ -7,23 +7,23 @@ rm current-version.txt
 # Output current version
 echo $VERSION_TAG$BUILD_TYPE$COMMIT_HASH > current-version.txt
 
-# # Description: Push a new release to github
-# git add .
+# Description: Push a new release to github
+git add .
 
-# # Build binary tagged with version + commit hash
-# go build -o ./Username-Generator
+# Build binary tagged with version + commit hash
+go build -o ./Username-Generator
 
-# # Commit changes
-# git commit -m "Release $VERSION_TAG$BUILD_TYPE$COMMIT_HASH"
+# Commit changes
+git commit -m "Release $VERSION_TAG$BUILD_TYPE$COMMIT_HASH"
 
-# # Push changes
-# git push
+# Push changes
+git push
 
-# # Create a new tag
-# git tag $VERSION_TAG$BUILD_TYPE$COMMIT_HASH
+# Create a new tag
+git tag $VERSION_TAG$BUILD_TYPE$COMMIT_HASH
 
-# # Push tag
-# git push --tags
+# Push tag
+git push --tags
 
-# # Cleanup binary
-# rm ./Username-Generator
+# Cleanup binary
+rm ./Username-Generator
