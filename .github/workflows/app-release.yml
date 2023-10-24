@@ -20,6 +20,10 @@ jobs:
               with:
                   go-version: 1.21 # Change this to your desired Go version
 
+            - name: Set release details
+              id: vars
+              run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
             - name: Build for Linux
               run: GOOS=linux GOARCH=amd64 go build -o Username-Generator-linux
 
@@ -31,17 +35,17 @@ jobs:
 
             - name: Archive Artifacts
               run: |
-                  zip Username-Generator-linux.zip Username-Generator-linux
-                  zip Username-Generator-windows.zip Username-Generator-windows.exe
-                  zip Username-Generator-macos.zip Username-Generator-macos
+                  zip Username-Generator-${{ steps.vars.outputs.tag }}-linux.zip Username-Generator-linux
+                  zip Username-Generator-${{ steps.vars.outputs.tag }}-windows.zip Username-Generator-windows.exe
+                  zip Username-Generator-${{ steps.vars.outputs.tag }}-macos.zip Username-Generator-macos
             - name: Upload Artifacts
               uses: actions/upload-artifact@v2
               with:
                   name: Username-Generator
                   path: |
-                      Username-Generator-linux.zip
-                      Username-Generator-windows.zip
-                      Username-Generator-macos.zip
+                      Username-Generator-${{ steps.vars.outputs.tag }}-linux.zip
+                      Username-Generator-${{ steps.vars.outputs.tag }}-windows.zip
+                      Username-Generator-${{ steps.vars.outputs.tag }}-macos.zip
     release:
         name: Create GitHub Release
         needs: build
